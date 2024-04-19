@@ -42,6 +42,8 @@ public class BadSmellCode {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
+			String test = "test";
+
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split(",");
