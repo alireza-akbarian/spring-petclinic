@@ -33,8 +33,6 @@
     <lifecycle-mapping>1.0.0</lifecycle-mapping>
     <maven-checkstyle.version>3.3.1</maven-checkstyle.version>
     <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
-    <spring-format.version>0.0.40</spring-format.version>
-
   </properties>
 
   <dependencies>
@@ -164,19 +162,6 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>io.spring.javaformat</groupId>
-        <artifactId>spring-javaformat-maven-plugin</artifactId>
-        <version>${spring-format.version}</version>
-        <executions>
-          <execution>
-            <phase>validate</phase>
-            <goals>
-              <goal>validate</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${maven-checkstyle.version}</version>
@@ -220,7 +205,7 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <executions>
           <execution>
-            <!-- Spring Boot Actuator displays build-related information 
+            <!-- Spring Boot Actuator displays build-related information
               if a META-INF/build-info.properties file is present -->
             <goals>
               <goal>build-info</goal>
@@ -378,8 +363,24 @@
       <build>
         <pluginManagement>
           <plugins>
-            <!-- This plugin's configuration is used to store Eclipse m2e settings 
+            <!-- This plugin's configuration is used to store Eclipse m2e settings
               only. It has no influence on the Maven build itself. -->
+            <plugin>
+              <groupId>com.github.spotbugs</groupId>
+              <artifactId>spotbugs-maven-plugin</artifactId>
+              <version>4.8.4.0</version>
+              <configuration>
+                <includeFilterFile>spotbugs-security-include.xml</includeFilterFile>
+                <excludeFilterFile>spotbugs-security-exclude.xml</excludeFilterFile>
+                <plugins>
+                  <plugin>
+                    <groupId>com.h3xstream.findsecbugs</groupId>
+                    <artifactId>findsecbugs-plugin</artifactId>
+                    <version>1.12.0</version>
+                  </plugin>
+                </plugins>
+              </configuration>
+            </plugin>
             <plugin>
               <groupId>org.eclipse.m2e</groupId>
               <artifactId>lifecycle-mapping</artifactId>
@@ -407,19 +408,6 @@
                         <versionRange>[1,)</versionRange>
                         <goals>
                           <goal>build-info</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore />
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>io.spring.javaformat</groupId>
-                        <artifactId>spring-javaformat-maven-plugin</artifactId>
-                        <versionRange>[0,)</versionRange>
-                        <goals>
-                          <goal>validate</goal>
                         </goals>
                       </pluginExecutionFilter>
                       <action>
